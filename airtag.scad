@@ -8,13 +8,37 @@ function airtag_height() = 8;
 
 function airtag_battdoor_diameter() = airtag_diameter() - 7;
 
-module airtag() {
+module airtag_body() {
 	color("White")
-		scale([1, 1, airtag_height()/airtag_diameter()])
-			sphere(d=airtag_diameter());
+		difference() {
+			scale([1, 1, airtag_height()/airtag_diameter()])
+				sphere(d=airtag_diameter());
+
+			translate([0, 0, airtag_height()/4])
+				cylinder(d=airtag_diameter(), h=airtag_height());
+		}
+}
+
+module airtag_battdoor() {
+	/*
+	 *  This translation is purely to prevent the two spheres from
+	 *  z-fighting over which color to use.
+	 */
+	translate([0, 0, .1])
 
 	color("Silver")
-		cylinder(d=airtag_battdoor_diameter(), h=airtag_height()/2);
+		intersection() {
+			translate([0, 0, airtag_height()/4])
+				cylinder(d=airtag_battdoor_diameter(), h=airtag_height()/4);
+
+			scale([1, 1, airtag_height()/airtag_diameter()])
+					sphere(d=airtag_diameter());
+		}
+}
+
+module airtag() {
+	airtag_body();
+	airtag_battdoor();
 }
 
 airtag();
