@@ -3,7 +3,7 @@
 You can include this in your model with:
 
 ```
-use <airtag.scad/airtag.scad>
+use <airtag.scad>
 ```
 
 There are 2 useful functions:
